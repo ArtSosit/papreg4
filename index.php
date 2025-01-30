@@ -23,6 +23,13 @@
     fetchDataTitle();
     fetchDataReasons();
     fetchDataTb1();
+    fetchDatacourse_name();
+    fetchDataDegree_name();
+    fetchDataagency();
+    fetchDatafirst_open();
+    fetchDataLast_update_course();
+    fetchDataclosing_course();
+    loadCheck()
   }
 
   function fetchDataTitle(formId) {
@@ -185,6 +192,334 @@
     temp.textContent = str;
     return temp.innerHTML;
   }
+
+
+  function fetchDatacourse_name(formId) {
+    // //console.log(formId)
+    $.ajax({
+      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+      type: 'GET', // การส่งข้อมูลแบบ GET
+      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+      data: {
+        action: 'getform', // ส่งค่า action ไปด้วย
+        formId: formId ?? 6 // ส่ง formId ไปด้วย
+      },
+      success: function(data) {
+        if (data.response === 'success') {
+
+          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+          const tbody = $('#fetchDatacourse_name'); // อ้างอิง <tbody>
+          tbody.empty();
+          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+            fetchedDataArray.forEach((item) => {
+              // //console.log("ข้อมูล:", item);
+              const row = `
+              <tr> <!-- เก็บ id เป็น data attribute -->
+                <td>${item.texts}</td> <!-- สมมุติ item มี title -->
+                <td>
+                    <button id="editcourse_name" class="btn btn-warning edit-btn" data-form-id="${item.sid}">แก้ไข</button>
+                  <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
+                </td>
+              </tr>`;
+              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+            });
+          } else {
+            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
+          }
+        } else {
+          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      }
+    });
+  }
+
+  function fetchDataDegree_name(formId) {
+    // //console.log(formId)
+    $.ajax({
+      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+      type: 'GET', // การส่งข้อมูลแบบ GET
+      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+      data: {
+        action: 'getform', // ส่งค่า action ไปด้วย
+        formId: formId ?? 7 // ส่ง formId ไปด้วย
+      },
+      success: function(data) {
+        if (data.response === 'success') {
+
+          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+          const tbody = $('#fetchDataDegree_name'); // อ้างอิง <tbody>
+          tbody.empty();
+          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+            fetchedDataArray.forEach((item) => {
+              // //console.log("ข้อมูล:", item);
+              const row = `
+              <tr> <!-- เก็บ id เป็น data attribute -->
+                <td>${item.texts}</td> <!-- สมมุติ item มี title -->
+                <td>
+                    <button id="editDegree_name" class="btn btn-warning edit-btn" data-form-id="${item.sid}">แก้ไข</button>
+                  <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
+                </td>
+              </tr>`;
+              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+            });
+          } else {
+            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
+          }
+        } else {
+          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      }
+    });
+  }
+
+  function fetchDataagency(formId) {
+    // //console.log(formId)
+    $.ajax({
+      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+      type: 'GET', // การส่งข้อมูลแบบ GET
+      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+      data: {
+        action: 'getform', // ส่งค่า action ไปด้วย
+        formId: formId ?? 8 // ส่ง formId ไปด้วย
+      },
+      success: function(data) {
+        if (data.response === 'success') {
+
+          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+          const tbody = $('#fetchDataagency'); // อ้างอิง <tbody>
+          tbody.empty();
+          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+            fetchedDataArray.forEach((item) => {
+              // //console.log("ข้อมูล:", item);
+              const row = `
+              <tr> <!-- เก็บ id เป็น data attribute -->
+                <td>${item.texts}</td> <!-- สมมุติ item มี title -->
+                <td>
+                    <button id="editagency" class="btn btn-warning edit-btn" data-form-id="${item.sid}">แก้ไข</button>
+                  <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
+                </td>
+              </tr>`;
+              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+            });
+          } else {
+            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
+          }
+        } else {
+          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      }
+    });
+  }
+
+  function fetchDatafirst_open(formId) {
+    // //console.log(formId)
+    $.ajax({
+      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+      type: 'GET', // การส่งข้อมูลแบบ GET
+      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+      data: {
+        action: 'getform', // ส่งค่า action ไปด้วย
+        formId: formId ?? 9 // ส่ง formId ไปด้วย
+      },
+      success: function(data) {
+        if (data.response === 'success') {
+
+          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+          const tbody = $('#fetchDatafirst_open'); // อ้างอิง <tbody>
+          tbody.empty();
+          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+            fetchedDataArray.forEach((item) => {
+              // //console.log("ข้อมูล:", item);
+              const row = `
+              <tr> <!-- เก็บ id เป็น data attribute -->
+                <td>${item.texts}</td> <!-- สมมุติ item มี title -->
+                <td>
+                    <button id="editfirst_open" class="btn btn-warning edit-btn" data-form-id="${item.sid}">แก้ไข</button>
+                  <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
+                </td>
+              </tr>`;
+              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+            });
+          } else {
+            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
+          }
+        } else {
+          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      }
+    });
+  }
+
+  function fetchDataLast_update_course(formId) {
+    // //console.log(formId)
+    $.ajax({
+      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+      type: 'GET', // การส่งข้อมูลแบบ GET
+      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+      data: {
+        action: 'getform', // ส่งค่า action ไปด้วย
+        formId: formId ?? 10 // ส่ง formId ไปด้วย
+      },
+      success: function(data) {
+        if (data.response === 'success') {
+
+          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+          const tbody = $('#fetchDataLast_update_course'); // อ้างอิง <tbody>
+          tbody.empty();
+          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+            fetchedDataArray.forEach((item) => {
+              // //console.log("ข้อมูล:", item);
+              const row = `
+              <tr> <!-- เก็บ id เป็น data attribute -->
+                <td>${item.texts}</td> <!-- สมมุติ item มี title -->
+                <td>
+                    <button id="editLast_update_course" class="btn btn-warning edit-btn" data-form-id="${item.sid}">แก้ไข</button>
+                  <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
+                </td>
+              </tr>`;
+              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+            });
+          } else {
+            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
+          }
+        } else {
+          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      }
+    });
+  }
+
+  function fetchDataclosing_course(formId) {
+    // //console.log(formId)
+    $.ajax({
+      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+      type: 'GET', // การส่งข้อมูลแบบ GET
+      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+      data: {
+        action: 'getform', // ส่งค่า action ไปด้วย
+        formId: formId ?? 11 // ส่ง formId ไปด้วย
+      },
+      success: function(data) {
+        if (data.response === 'success') {
+
+          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+          const tbody = $('#fetchDataclosing_course'); // อ้างอิง <tbody>
+          tbody.empty();
+          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+            fetchedDataArray.forEach((item) => {
+              // //console.log("ข้อมูล:", item);
+              const row = `
+              <tr> <!-- เก็บ id เป็น data attribute -->
+                <td>${item.texts}</td> <!-- สมมุติ item มี title -->
+                <td>
+                    <button id="editclosing_course" class="btn btn-warning edit-btn" data-form-id="${item.sid}">แก้ไข</button>
+                  <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
+                </td>
+              </tr>`;
+              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+            });
+          } else {
+            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
+          }
+        } else {
+          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      }
+    });
+  }
+
+
+  <?php
+  // เชื่อมต่อฐานข้อมูล
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "papreg5"; // เปลี่ยนเป็นชื่อฐานข้อมูลของคุณ
+
+  // สร้างการเชื่อมต่อ
+  $conn = new mysqli($servername, $username, $password, $dbname);
+
+  // ตรวจสอบการเชื่อมต่อ
+  if ($conn->connect_error) {
+    die("การเชื่อมต่อฐานข้อมูลล้มเหลว: " . $conn->connect_error);
+  }
+
+  // ดึงข้อมูลจากฐานข้อมูล
+  $sql = "SELECT * FROM 7checkbox WHERE cid = 1";
+  $result = $conn->query($sql);
+
+  // เช็คว่ามีข้อมูลหรือไม่
+  if ($result->num_rows > 0) {
+    // ดึงข้อมูล
+    $row = $result->fetch_assoc();
+
+    // ใช้ loop เพื่อเก็บค่าของแต่ละคอลัมน์ col1, col2, ..., col13
+    for ($i = 1; $i <= 13; $i++) {
+      ${"col$i"} = $row["col$i"];
+    }
+  } else {
+    echo "ไม่พบข้อมูล";
+  }
+
+  // ปิดการเชื่อมต่อฐานข้อมูล
+  $conn->close();
+  ?>
+
+  function loadCheck() {
+    // ฝังค่าจาก PHP ลงใน JavaScript
+    var col1 = <?php echo $col1; ?>;
+    var col2 = <?php echo $col2; ?>;
+    var col3 = <?php echo $col3; ?>;
+    var col4 = <?php echo $col4; ?>;
+    var col5 = <?php echo $col5; ?>;
+    var col6 = <?php echo $col6; ?>;
+    var col7 = <?php echo $col7; ?>;
+    var col8 = <?php echo $col8; ?>;
+    var col9 = <?php echo $col9; ?>;
+    var col10 = <?php echo $col10; ?>;
+    var col11 = <?php echo $col11; ?>;
+    var col12 = <?php echo $col12; ?>;
+    var col13 = <?php echo $col13; ?>;
+
+    // ตั้งค่าการเช็คสำหรับแต่ละ checkbox ตามค่าที่ดึงมา
+    $('#col1').prop('checked', col1 == 1);
+    $('#col2').prop('checked', col2 == 1);
+    $('#col3').prop('checked', col3 == 1);
+    $('#col4').prop('checked', col4 == 1);
+    $('#col5').prop('checked', col5 == 1);
+    $('#col6').prop('checked', col6 == 1);
+    $('#col7').prop('checked', col7 == 1);
+    $('#col8').prop('checked', col8 == 1);
+    $('#col9').prop('checked', col9 == 1);
+    $('#col10').prop('checked', col10 == 1);
+    $('#col11').prop('checked', col11 == 1);
+    $('#col12').prop('checked', col12 == 1);
+    $('#col13').prop('checked', col13 == 1);
+  }
 </script>
 
 <body>
@@ -293,7 +628,7 @@
         <div class="card-body">
           <label for="course_name">1.ชื่อหลักสูตร</label>
           <textarea id="course_name" class="form-control"></textarea>
-          <button id="savecourse_name" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
+          <button id="savecourse_name" data-form-id="6" class="btn btn-success mt-2">บันทึก</button>
         </div>
         <div class="card-body bg-white shadow-md rounded-lg">
           <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
@@ -303,7 +638,7 @@
                 <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
               </tr>
             </thead>
-            <tbody id="">
+            <tbody id="fetchDatacourse_name">
             </tbody>
           </table>
         </div>
@@ -312,7 +647,7 @@
         <div class="card-body">
           <label for="Degree_name">2.ชื่อปริญญา</label>
           <textarea id="Degree_name" class="form-control"></textarea>
-          <button id="saverDegree_name" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
+          <button id="saveDegree_name" data-form-id="7" class="btn btn-success mt-2">บันทึก</button>
         </div>
         <div class="card-body bg-white shadow-md rounded-lg">
           <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
@@ -322,7 +657,7 @@
                 <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
               </tr>
             </thead>
-            <tbody id="">
+            <tbody id="fetchDataDegree_name">
             </tbody>
           </table>
         </div>
@@ -332,7 +667,7 @@
         <div class="card-body">
           <label for="agency">3.หน่วยงานที่รับผิดชอบ</label>
           <textarea id="agency" class="form-control"></textarea>
-          <button id="saveagency" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
+          <button id="saveagency" data-form-id="8" class="btn btn-success mt-2">บันทึก</button>
         </div>
         <div class="card-body bg-white shadow-md rounded-lg">
           <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
@@ -342,7 +677,7 @@
                 <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
               </tr>
             </thead>
-            <tbody id="">
+            <tbody id="fetchDataagency">
             </tbody>
           </table>
         </div>
@@ -352,7 +687,7 @@
         <div class="card-body">
           <label for="first_open">4.หลักสูตรขออนุมัติเปิดครั้งแรก</label>
           <textarea id="first_open" class="form-control"></textarea>
-          <button id="savefirst_open" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
+          <button id="savefirst_open" data-form-id="9" class="btn btn-success mt-2">บันทึก</button>
         </div>
         <div class="card-body bg-white shadow-md rounded-lg">
           <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
@@ -362,7 +697,7 @@
                 <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
               </tr>
             </thead>
-            <tbody id="">
+            <tbody id="fetchDatafirst_open">
             </tbody>
           </table>
         </div>
@@ -372,7 +707,7 @@
         <div class="card-body">
           <label for="Last_update_course">5.หลักสูตรปรับปรุงครั้งสุดท้าย</label>
           <textarea id="Last_update_course" class="form-control"></textarea>
-          <button id="saveLast_update_course" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
+          <button id="saveLast_update_course" data-form-id="10" class="btn btn-success mt-2">บันทึก</button>
         </div>
         <div class="card-body bg-white shadow-md rounded-lg">
           <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
@@ -382,7 +717,7 @@
                 <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
               </tr>
             </thead>
-            <tbody id="">
+            <tbody id="fetchDataLast_update_course">
             </tbody>
           </table>
         </div>
@@ -392,7 +727,7 @@
         <div class="card-body">
           <label for="closing_course">6.ปิดหลักสูตร</label>
           <textarea id="closing_course" class="form-control"></textarea>
-          <button id="saveclosing_course" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
+          <button id="saveclosing_course" data-form-id="11" class="btn btn-success mt-2">บันทึก</button>
         </div>
         <div class="card-body bg-white shadow-md rounded-lg">
           <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
@@ -402,91 +737,117 @@
                 <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
               </tr>
             </thead>
-            <tbody id="">
+            <tbody id="fetchDataclosing_course">
             </tbody>
           </table>
         </div>
 
         <div class="section mt-4 form-check">
           <label for="improv_info4">7. เหตุผลในการปิดหลักสูตร </label>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col1" value="1"
+              <?= isset($course['col1']) && $course['col1'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               หลักสูตรไม่สอดคล้องกับความต้องการของสังคม/ตลาดแรงงานของประเทศหรือต่างประเทศ
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col2" value="1"
+              <?= isset($course['col2']) && $course['col2'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               ไม่มีผู้สมัครเข้าเรียน ติดต่อกันเกิน 3 ปีการศึกษา ตั้งแต่ปีการศึกษา...................
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col3" value="1"
+              <?= isset($course['col3']) && $course['col3'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               ไม่มีการจัดการเรียนการสอน ติดต่อกันเกิน 3 ปีการศึกษา ตั้งแต่ปีการศึกษา......
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col4" value="1"
+              <?= isset($course['col4']) && $course['col4'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               ไม่ได้เปิดรับนิสิตมาแล้วไม่น้อยกว่า 3 ปีการศึกษา
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col5" value="1"
+              <?= isset($course['col5']) && $course['col5'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               มีหลักสูตรสาขาใหม่ทดแทน
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col6" value="1"
+              <?= isset($course['col6']) && $course['col6'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               ศักยภาพและความพร้อมยังไม่สอดคล้องกับเกณฑ์มาตรฐานหลักสูตรระดับอุดมศึกษา พ.ศ. 2558
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col7" value="1"
+              <?= isset($course['col7']) && $course['col7'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               จำนวนอาจารย์ผู้รับผิดชอบหลักสูตร/อาจารย์ประจำหลักสูตรไม่เป็นไปตามเกณฑ์มาตรฐานหลักสูตร พ.ศ. 2558
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col8" value="1"
+              <?= isset($course['col8']) && $course['col8'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               ผลงานทางวิชาการของอาจารย์ผู้รับผิดชอบหลักสูตรไม่เป็นไปตามเกณฑ์มาตรฐานหลักสูตร พ.ศ. 2558
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col9" value="1"
+              <?= isset($course['col9']) && $course['col9'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               ผลงานทางวิชาการของอาจารย์ประจำหลักสูตรไม่เป็นไปตามเกณฑ์มาตรฐานหลักสูตร พ.ศ. 2558
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col10" value="1"
+              <?= isset($course['col10']) && $course['col10'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               คุณวุฒิของอาจารย์ผู้รับผิดชอบหลักสูตรไม่ตรงหรือสัมพันธ์กับสาขาที่เปิดสอน
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col11" value="1"
+              <?= isset($course['col11']) && $course['col11'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               คุณวุฒิของอาจารย์ประจำหลักสูตรไม่ตรงหรือสัมพันธ์กับสาขาที่เปิดสอน
             </label>
           </div>
+
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col12" value="1"
+              <?= isset($course['col12']) && $course['col12'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               ทรัพยากรการจัดการเรียนการสอนมีไม่เพียงพอ
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="col13" value="1"
+              <?= isset($course['col13']) && $course['col13'] == 1 ? 'checked' : ''; ?>>
+            <label class="form-check-label">
               อื่นๆ (ระบุ) ตั้งแต่เริ่มเปิดหลักสูตรปี พ.ศ. 2563 จนถึงปัจจุบัน จำนวนนิสิตสมัครเข้าศึกษาในหลักสูตรน้อยไม่ถึงจุดคุ้มทุนที่หลักสูตรกำหนด คือ ปีการศึกษาละ 10 คน
             </label>
           </div>
+          <button class="btn btn-success mt-2" onclick="saveCheck()">บันทึก</button>
         </div>
 
         <div class="card-body">
@@ -792,49 +1153,6 @@
                 </tbody>
               </table>
             </div>
-
-            <label for="">9.3 การจัดสรรอัตรากำลังใหม่ หลังจากปิดหลักสูตรแล้ว</label>
-            <div class="card-body">
-              <label for="Teacher">อาจารย์ผู้รับผิดชอบหลักสูตร/อาจารย์ประจำหลักสูตรที่ขอปิด*</label>
-              <textarea id="Teacher" class="form-control"></textarea>
-            </div>
-            <div class="card-body">
-              <label for="teaching_load">ภาระงานสอนในปัจจุบัน/อาจารย์ประจำหลักสูตรอื่น (ระบุชื่อหลักสูตร)</label>
-              <textarea id="teaching_load" class="form-control"></textarea>
-            </div>
-            <button id="saveTable" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
-            <div class="card-body bg-white shadow-md rounded-lg">
-              <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
-                <thead class='bg-gray-200 text-gray-600'>
-                  <tr>
-                    <th class='py-2 px-4 border-b font-k2d'>อาจารย์ผู้รับผิดชอบหลักสูตร/อาจารย์ประจำหลักสูตรที่ขอปิด*</th>
-                    <th class='py-2 px-4 border-b font-k2d'>ภาระงานสอนในปัจจุบัน/อาจารย์ประจำหลักสูตรอื่น (ระบุชื่อหลักสูตร)</th>
-                    <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
-                  </tr>
-                </thead>
-                <tbody id="fetchDataReasons">
-                </tbody>
-              </table>
-            </div>
-
-            <div class="card-body">
-              <label for="other">9.4 อื่นๆ (ระบุ)</label>
-              <textarea id="other" class="form-control"></textarea>
-              <button id="saveother" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
-            </div>
-            <div class="card-body bg-white shadow-md rounded-lg">
-              <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
-                <thead class='bg-gray-200 text-gray-600'>
-                  <tr>
-                    <th class='py-2 px-4 border-b font-k2d'>อื่นๆ (ระบุ)</th>
-                    <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
-                  </tr>
-                </thead>
-                <tbody id="">
-                </tbody>
-              </table>
-            </div>
-
           </div>
 
           <script>
@@ -854,6 +1172,48 @@
             });
           </script>
           </script>
+          <label for="">9.3 การจัดสรรอัตรากำลังใหม่ หลังจากปิดหลักสูตรแล้ว</label>
+          <div class="card-body">
+            <label for="Teacher">อาจารย์ผู้รับผิดชอบหลักสูตร/อาจารย์ประจำหลักสูตรที่ขอปิด*</label>
+            <textarea id="Teacher" class="form-control"></textarea>
+          </div>
+          <div class="card-body">
+            <label for="teaching_load">ภาระงานสอนในปัจจุบัน/อาจารย์ประจำหลักสูตรอื่น (ระบุชื่อหลักสูตร)</label>
+            <textarea id="teaching_load" class="form-control"></textarea>
+          </div>
+          <button id="saveTable" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
+          <div class="card-body bg-white shadow-md rounded-lg">
+            <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
+              <thead class='bg-gray-200 text-gray-600'>
+                <tr>
+                  <th class='py-2 px-4 border-b font-k2d'>อาจารย์ผู้รับผิดชอบหลักสูตร/อาจารย์ประจำหลักสูตรที่ขอปิด*</th>
+                  <th class='py-2 px-4 border-b font-k2d'>ภาระงานสอนในปัจจุบัน/อาจารย์ประจำหลักสูตรอื่น (ระบุชื่อหลักสูตร)</th>
+                  <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
+                </tr>
+              </thead>
+              <tbody id="fetchDataReasons">
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-body">
+            <label for="other">9.4 อื่นๆ (ระบุ)</label>
+            <textarea id="other" class="form-control"></textarea>
+            <button id="saveother" data-form-id="2" class="btn btn-success mt-2">บันทึก</button>
+          </div>
+          <div class="card-body bg-white shadow-md rounded-lg">
+            <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
+              <thead class='bg-gray-200 text-gray-600'>
+                <tr>
+                  <th class='py-2 px-4 border-b font-k2d'>อื่นๆ (ระบุ)</th>
+                  <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
+                </tr>
+              </thead>
+              <tbody id="">
+              </tbody>
+            </table>
+          </div>
+
           <div class="card-body">
             <label for="approval_result">10.ผลการอนุมัติปิดหลักสูตร</label>
             <textarea id="approval_result" class="form-control"></textarea>
@@ -924,7 +1284,7 @@
 
   function saveData(selector, formId) {
     var data = $(selector).summernote('code'); // Get the content
-    console.log(formId);
+    console.log(data);
 
     // Check if content is empty or not
     if (data.trim() === "" || data.trim() === "<p><br></p>") {
@@ -1001,6 +1361,42 @@
     }, );
 
   });
+
+  function saveCheck() {
+    // ดึงค่าจาก Checkbox
+    var checkboxData = {
+      col1: $('#col1').is(':checked') ? 1 : 0,
+      col2: $('#col2').is(':checked') ? 1 : 0,
+      col3: $('#col3').is(':checked') ? 1 : 0,
+      col4: $('#col4').is(':checked') ? 1 : 0,
+      col5: $('#col5').is(':checked') ? 1 : 0,
+      col6: $('#col6').is(':checked') ? 1 : 0,
+      col7: $('#col7').is(':checked') ? 1 : 0,
+      col8: $('#col8').is(':checked') ? 1 : 0,
+      col9: $('#col9').is(':checked') ? 1 : 0,
+      col10: $('#col10').is(':checked') ? 1 : 0,
+      col11: $('#col11').is(':checked') ? 1 : 0,
+      col12: $('#col12').is(':checked') ? 1 : 0,
+      col13: $('#col13').is(':checked') ? 1 : 0
+    };
+    console.log(checkboxData)
+    // ส่งข้อมูลผ่าน AJAX
+    $.ajax({
+      type: 'POST',
+      url: 'saveCheck.php',
+      dataType: 'json',
+      data: checkboxData, // ส่งข้อมูล checkbox ไปที่ PHP
+      success: function(response) {
+        alert("บันทึกข้อมูลแล้ว");
+      },
+      error: function(xhr, status, error) {
+        console.log('เกิดข้อผิดพลาดในการบันทึกข้อมูล.', status, error);
+        alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล.');
+      }
+    });
+  }
+
+
 
   ////////////////////////  EDIT HEREE
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1088,6 +1484,7 @@
         error: function(xhr, status, error) {
           console.error('Error:', xhr.responseText); // Check server response
           alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+          loadData();
         }
       });
 
