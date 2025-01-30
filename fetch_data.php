@@ -23,6 +23,7 @@ if (isset($_GET['formId']) && is_numeric($_GET['formId'])) {
     // ตรวจสอบผลลัพธ์
     if ($result->num_rows > 0) {
       $data = [];
+
       while ($row = $result->fetch_assoc()) {
         $data[] = [
           'sid' => $formId,

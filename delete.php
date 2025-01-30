@@ -39,6 +39,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       $stmt->bind_param(str_repeat('i', count($formIds)), ...$formIds); // Bind array values
       break;
 
+    case 'topic8':
+      $id = $_POST['id'];
+      // $placeholders = implode(',', array_fill(0, count($formIds), '?')); // สร้าง placeholders สำหรับ IN clause
+
+      $stmt = $conn->prepare("DELETE FROM topic8 WHERE id = ?");
+      if (!$stmt) {
+        throw new Exception('Failed to prepare statement: ' . $conn->error); // ถ้าเตรียมคำสั่งไม่ได้ ให้โยนข้อผิดพลาด
+      }
+      $stmt->bind_param('i', $id);
+      $stmt->execute();
+      if ($stmt->affected_rows > 0) {
+        echo "ลบข้อมูลสำเร็จ";
+      } else {
+        echo "ไม่พบข้อมูลที่ต้องการลบ";
+      }
+      $stmt->close();
+      break;
     default:
       throw new Exception('Invalid action');
   }
@@ -47,7 +64,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
   if (!$stmt->execute()) {
     throw new Exception('Failed to execute query: ' . $stmt->error);
   }
-
-  // Respond with success
-  // echo json_encode(['status' => 'success']);
 }

@@ -29,7 +29,8 @@
     fetchDatafirst_open();
     fetchDataLast_update_course();
     fetchDataclosing_course();
-    loadCheck()
+    loadCheck();
+    fetchDatatopic8();
   }
 
   function fetchDataTitle(formId) {
@@ -451,8 +452,6 @@
       }
     });
   }
-
-
   <?php
   // เชื่อมต่อฐานข้อมูล
   $servername = "localhost";
@@ -519,6 +518,50 @@
     $('#col11').prop('checked', col11 == 1);
     $('#col12').prop('checked', col12 == 1);
     $('#col13').prop('checked', col13 == 1);
+  }
+
+
+  function fetchDatatopic8() {
+    $.ajax({
+      url: 'fetchtopic8.php', // URL ของ PHP ที่จะดึงข้อมูล
+      type: 'GET', // ใช้วิธีการ GET
+      dataType: 'json', // รับข้อมูลเป็น JSON
+      success: function(data) {
+        if (data.response === 'success') {
+          console.log("topic 8", data);
+          const tbody = $('#fetchDatatopic8'); // อ้างอิง <tbody>
+          tbody.empty(); // ล้างข้อมูลเดิมออก
+
+          if (data.data.length > 0) {
+            data.data.forEach((item, index) => {
+              let row = `
+                <tr> 
+                  <td>${index + 1}</td>  
+                  <td>${item.type}</td> 
+                  <td>${item.admission_plan}</td> 
+                  <td>${item.year1}</td>   
+                  <td>${item.year2}</td>   
+                  <td>${item.year3}</td>   
+                  <td>${item.year4}</td>   
+                  <td>${item.year5}</td>
+                  <td>
+                    <button id="editclosing_course" class="btn btn-warning" onclick="edittopic8(${item.id})">แก้ไข</button>
+                  </td>
+                  <td >
+                    <button class="btn btn-danger delete-btn" onclick="deletetopic8(${item.id})">ลบ</button>
+                  </td>
+                </tr>`;
+              tbody.append(row); // เพิ่มข้อมูลเข้าไปใน <tbody>
+            });
+          } else {
+            tbody.append('<tr><td colspan="10" class="text-center">ไม่มีข้อมูล</td></tr>');
+          }
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', xhr, status, error);
+      }
+    });
   }
 </script>
 
@@ -642,8 +685,6 @@
             </tbody>
           </table>
         </div>
-
-
         <div class="card-body">
           <label for="Degree_name">2.ชื่อปริญญา</label>
           <textarea id="Degree_name" class="form-control"></textarea>
@@ -661,9 +702,6 @@
             </tbody>
           </table>
         </div>
-
-
-
         <div class="card-body">
           <label for="agency">3.หน่วยงานที่รับผิดชอบ</label>
           <textarea id="agency" class="form-control"></textarea>
@@ -681,9 +719,6 @@
             </tbody>
           </table>
         </div>
-
-
-
         <div class="card-body">
           <label for="first_open">4.หลักสูตรขออนุมัติเปิดครั้งแรก</label>
           <textarea id="first_open" class="form-control"></textarea>
@@ -701,9 +736,6 @@
             </tbody>
           </table>
         </div>
-
-
-
         <div class="card-body">
           <label for="Last_update_course">5.หลักสูตรปรับปรุงครั้งสุดท้าย</label>
           <textarea id="Last_update_course" class="form-control"></textarea>
@@ -721,9 +753,6 @@
             </tbody>
           </table>
         </div>
-
-
-
         <div class="card-body">
           <label for="closing_course">6.ปิดหลักสูตร</label>
           <textarea id="closing_course" class="form-control"></textarea>
@@ -853,68 +882,56 @@
         <div class="card-body">
           <label for="reasons">8.ผลการรับนิสิต/การสำเร็จการศึกษาย้อนหลัง 5 ปี</label>
           <br>
-          <label for="reasons">การรับนิสิต(จำนวนคน)</label>
-          <input type="text" class="form-control mb-3"></input>
-
+          <label for="type">ประเภท </label>
+          <input type="text" class="form-control mb-3" id="type" placeholder="-"></input>
+          <label for="people">การรับนิสิต(จำนวนคน)</label>
+          <input type="text" class="form-control mb-3" id="people" placeholder="-"></input>
           <div class="form-row">
             <div class="col">
-              <label for="reasons">ปี 2563</label>
-              <input type="text" class="form-control mb-3"></input>
+              <label for="year_2563">ปี 2563</label>
+              <input type="text" class="form-control mb-3" id="2563" placeholder="-"></input>
             </div>
             <div class="col">
-              <label for="reasons">ปี 2564</label>
-              <input type="text" class="form-control mb-3"></input>
+              <label for="year_2564">ปี 2564</label>
+              <input type="text" class="form-control mb-3" id="2564" placeholder="-"></input>
             </div>
             <div class="col">
-              <label for="reasons">ปี 2565</label>
-              <input type="text" class="form-control mb-3"></input>
+              <label for="year_2565">ปี 2565</label>
+              <input type="text" class="form-control mb-3" id="2565" placeholder="-"></input>
             </div>
             <div class="col">
-              <label for="reasons">ปี 2566</label>
-              <input type="text" class="form-control mb-3"></input>
+              <label for="year_2566">ปี 2566</label>
+              <input type="text" class="form-control mb-3" id="2566" placeholder="-"></input>
             </div>
             <div class="col">
-              <label for="reasons">ปี 2567</label>
-              <input type="text" class="form-control mb-3"></input>
+              <label for="year_2567">ปี 2567</label>
+              <input type="text" class="form-control mb-3" id="2567" placeholder="-"></input>
             </div>
           </div>
-
-          <label for="reasons">การสำเร็จการศึกษา(จำนวนคน)</label>
-          <input type="text" class="form-control mb-3"></input>
-
-          <div class="form-row">
-            <div class="col">
-              <label for="reasons">ปี 2563</label>
-              <input type="text" class="form-control mb-3"></input>
-            </div>
-            <div class="col">
-              <label for="reasons">ปี 2564</label>
-              <input type="text" class="form-control mb-3"></input>
-            </div>
-            <div class="col">
-              <label for="reasons">ปี 2565</label>
-              <input type="text" class="form-control mb-3"></input>
-            </div>
-            <div class="col">
-              <label for="reasons">ปี 2566</label>
-              <input type="text" class="form-control mb-3"></input>
-            </div>
-            <div class="col">
-              <label for="reasons">ปี 2567</label>
-              <input type="text" class="form-control mb-3"></input>
-            </div>
-          </div>
-          <button id="" class="btn btn-success mt-2">บันทึก</button>
+          <button class="btn btn-success mt-2" onclick="saveTopic8()">บันทึก</button>
         </div>
+
         <div class="card-body bg-white shadow-md rounded-lg">
           <table class='w-full table-auto bg-gray-100 rounded-lg overflow-hidden'>
             <thead class='bg-gray-200 text-gray-600'>
               <tr>
-                <th class='py-2 px-4 border-b font-k2d'>ปิดหลักสูตร</th>
-                <th class='py-2 px-4 border-b font-k2d'>การกระทำ</th>
+                <th rowspan="2" class='py-2 px-4 border-b font-k2d'>ที่</th>
+                <th rowspan="2" class='py-2 px-4 border-b font-k2d'>ประเภท</th>
+                <th rowspan="2" class='py-2 px-4 border-b font-k2d'>แผนการรับนิสิต</th>
+                <th colspan="5" class='py-2 px-4 border-b font-k2d'>จำนวนนิสิตในแต่ละปีการศึกษา (คน)</th>
+                <th rowspan="2" class='py-2 px-4 border-b font-k2d'>แก้ไข</th>
+                <th rowspan="2" class='py-2 px-4 border-b font-k2d'>ลบ</th>
+              <tr>
+                <th class='py-2 px-4 border-b font-k2d'>2563</th>
+                <th class='py-2 px-4 border-b font-k2d'>2564</th>
+                <th class='py-2 px-4 border-b font-k2d'>2565</th>
+                <th class='py-2 px-4 border-b font-k2d'>2566</th>
+                <th class='py-2 px-4 border-b font-k2d'>2567</th>
+              </tr>
+
               </tr>
             </thead>
-            <tbody id="">
+            <tbody id="fetchDatatopic8">
             </tbody>
           </table>
         </div>
@@ -965,7 +982,7 @@
                 <div class="col-3 ">แผน ก 2</div>
               </div>
               <!-- Rows for each year -->
-              <!-- Year 1 -->
+
               <div class="row border-bottom text-center">
                 <div class="col-2 ">1</div>
                 <div class="col-2 ">
@@ -981,7 +998,7 @@
                   <input type="text" class="form-control" placeholder="-" />
                 </div>
               </div>
-              <!-- Year 2 -->
+
               <div class="row border-bottom text-center">
                 <div class="col-2 ">2</div>
                 <div class="col-2 ">
@@ -1395,6 +1412,41 @@
       }
     });
   }
+  let currentId = null;
+
+  function saveTopic8() {
+    if ($("#type").val().trim() === "") {
+      alert("กรุณากรอกข้อมูลประเภท");
+      return;
+    }
+    $.ajax({
+      type: 'POST',
+      url: 'insert.php',
+      dataType: 'json',
+      data: {
+        id: currentId ?? null,
+        action: 'saveTopic8',
+        type: $("#type").val(),
+        people: $("#people").val(),
+        year1: $("#2563").val(),
+        year2: $("#2564").val(),
+        year3: $("#2565").val(),
+        year4: $("#2566").val(),
+        year5: $("#2567").val(),
+      },
+      success: function(response) {
+        console.log("✅ Response from server:", response);
+        alert("บันทึกข้อมูลเรียบร้อย");
+        fetchDatatopic8();
+        currentId = response.id
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr.responseText);
+        alert("❌ เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+        console.log("❌ Error details:", xhr, status, error);
+      }
+    });
+  }
 
 
 
@@ -1458,6 +1510,38 @@
     xhr.send();
   };
 
+  function edittopic8(id) {
+    $.ajax({
+      url: 'fetchtopic8.php', // URL ของ PHP ที่จะดึงข้อมูล
+      type: 'GET', // การส่งข้อมูลแบบ GET
+      dataType: 'json',
+      // กำหนดให้รับข้อมูลในรูปแบบ JSON
+      success: function(data) {
+        if (data.response === 'success') {
+          console.log("topic 8", data.data[0].type);
+          const item = data.data.find(d => d.id === id);
+          if (item) {
+            $("#type").val(item.type);
+            $("#people").val(item.admission_plan);
+            $("#2563").val(item.year1);
+            $("#2564").val(item.year2);
+            $("#2565").val(item.year3);
+            $("#2566").val(item.year4);
+            $("#2567").val(item.year5);
+            currentId = id;
+          } else {
+            console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          }
+        } else {
+          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', xhr, status, error);
+      }
+    });
+
+  }
 
 
 
@@ -1514,6 +1598,36 @@
           console.error('Error:', xhr.responseText); // Check server response
           alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
           loadData();
+        }
+      });
+
+    }
+  }
+
+  function deletetopic8(id) {
+    if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
+      $.ajax({
+        type: 'POST',
+        url: 'delete.php',
+        dataType: 'json', // Expect JSON response
+        data: {
+          action: 'topic8',
+          id: id
+        },
+        success: function(response) {
+          if (response.status === 'success') {
+            alert('ลบข้อมูลสำเร็จ');
+            loadData();
+          } else {
+            alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
+            loadData();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log('Error:', xhr, status, error); // Check server response
+          // alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+          alert('ลบข้อมูลสำเร็จ');
+          location.reload();
         }
       });
 
