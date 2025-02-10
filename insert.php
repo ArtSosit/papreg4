@@ -133,9 +133,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Handle any errors that occur during insertion
       echo json_encode(['response' => 'Error saving data']);
     }
-  } else {
-    http_response_code(500);
-    echo json_encode(['response' => 'Failed to save data: ' . $stmt->error]);
+  } elseif ($action == "table9_3") {
+    $id = $_POST["id"];
+    $teaching_load = $_POST["teaching_load"];
+    $Teacher = $_POST["Teacher"];
+
+    if ($id) {
+      $sql = "INSERT INTO table9_3 (id,row1,row2) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE 
+              row1 = VALUES(row1), 
+              row2=VALUES(row2)";
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("iss", $id, $teaching_load, $Teacher);
+    } else {
+      $sql = "INSERT INTO table9_3 (row1,row2) VALUES (?, ?)";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("ss", $teaching_load, $Teacher);
+    }
+
+    if ($stmt->execute()) {
+      // Get the last inserted id
+      $last_inserted_id = $conn->insert_id;
+
+      // Send a response back to the client including the id
+      echo json_encode([
+        'response' => 'Data saved successfully!',
+        'id' => $last_inserted_id
+      ]);
+    } else {
+      // Handle any errors that occur during insertion
+      echo json_encode(['response' => 'Error saving data']);
+    }
   }
 }
 

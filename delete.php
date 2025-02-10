@@ -56,6 +56,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
       }
       $stmt->close();
       break;
+
+    case 'deletetable9_3':
+      $id = $_POST['id'];
+      // $placeholders = implode(',', array_fill(0, count($formIds), '?')); // สร้าง placeholders สำหรับ IN clause
+
+      $stmt = $conn->prepare("DELETE FROM table9_3 WHERE id = ?");
+      if (!$stmt) {
+        throw new Exception('Failed to prepare statement: ' . $conn->error); // ถ้าเตรียมคำสั่งไม่ได้ ให้โยนข้อผิดพลาด
+      }
+      $stmt->bind_param('i', $id);
+      $stmt->execute();
+      if ($stmt->affected_rows > 0) {
+        echo "ลบข้อมูลสำเร็จ";
+      } else {
+        echo "ไม่พบข้อมูลที่ต้องการลบ";
+      }
+      $stmt->close();
+      break;
+
     default:
       throw new Exception('Invalid action');
   }
