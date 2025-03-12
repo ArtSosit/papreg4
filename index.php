@@ -7,58 +7,63 @@
   <title>ปรับตัว </title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=K2D:wght@300;400;500;600;700&display=swap">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <script>
-  window.onload = function() {
-    loadData();
-  }
+window.onload = function() {
+  loadData();
+}
 
-  function loadData() {
-    fetchDataTitle();
-    fetchDataReasons();
-    fetchDataTb1();
-    fetchDatacourse_name();
-    fetchDataDegree_name();
-    fetchDataagency();
-    fetchDatafirst_open();
-    fetchDataLast_update_course();
-    fetchDataclosing_course();
-    loadCheck();
-    fetchDatatopic8();
-    fetchDataTb9_3();
-    fetchDataother();
-    fetchDataapproval_result();
-    fetchDatapropos_issue();
-    fetchDatamati();
-  }
+function loadData() {
+  fetchDataTitle();
+  fetchDataReasons();
+  fetchDataTb1();
+  fetchDatacourse_name();
+  fetchDataDegree_name();
+  fetchDataagency();
+  fetchDatafirst_open();
+  fetchDataLast_update_course();
+  fetchDataclosing_course();
+  loadCheck();
+  fetchDatatopic8();
+  fetchDataTb9_3();
+  fetchDataother();
+  fetchDataapproval_result();
+  fetchDatapropos_issue();
+  fetchDatamati();
+}
 
-  function fetchDataTitle(formId) {
-    console.log("fetchDataTitle");
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 1 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
-          console.log("fetchDataTitle", data.data);
-          const fetchedDataArray = data.data; // array of objects ที่ได้รับ
-          const tbody = $('#fetchDataTitle'); // อ้างอิง <tbody>
-          tbody.empty(); // ล้างข้อมูลเดิมในตาราง
+function fetchDataTitle(formId) {
+  console.log("fetchDataTitle");
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 1 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
+        console.log("fetchDataTitle", data.data);
+        const fetchedDataArray = data.data; // array of objects ที่ได้รับ
+        const tbody = $('#fetchDataTitle'); // อ้างอิง <tbody>
+        tbody.empty(); // ล้างข้อมูลเดิมในตาราง
 
-          // ตรวจสอบข้อมูลและแสดงผล
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              const row = `
+        // ตรวจสอบข้อมูลและแสดงผล
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            const row = `
               <tr>
                 <td>${item.texts}</td> <!-- แสดง texts -->
                 <td>
@@ -66,43 +71,43 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
 
-  function fetchDataReasons(formId) {
-    // //console.log(formId)
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 2 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
+function fetchDataReasons(formId) {
+  // //console.log(formId)
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 2 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
 
-          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
-          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
-          const tbody = $('#fetchDataReasons'); // อ้างอิง <tbody>
-          tbody.empty();
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              // //console.log("ข้อมูล:", item);
-              const row = `
+        const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+        // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+        const tbody = $('#fetchDataReasons'); // อ้างอิง <tbody>
+        tbody.empty();
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            // //console.log("ข้อมูล:", item);
+            const row = `
               <tr> <!-- เก็บ id เป็น data attribute -->
                 <td>${item.texts}</td> <!-- สมมุติ item มี title -->
                 <td>
@@ -110,60 +115,60 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
-
-
-
-  function fetchDataTb1() {
-    const action = "table1";
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'fetchtable.php?action=' + action, true);
-
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          try {
-            var tb1 = JSON.parse(xhr.responseText);
-            displayDataTb1(tb1);
-            console.log("tb1", tb1.data[0].texts);
-          } catch (e) {
-            console.error('Error parsing JSON:', e);
-          }
-        } else {
-          console.error('Failed to fetch data:', xhr.status);
-        }
-      }
-    };
-
-    xhr.send();
-  }
-
-  function displayDataTb1(tb1) {
-    const tableBody = document.getElementById('displayDataTb1');
-    if (!tableBody) {
-      console.error("Element with ID 'displayDataTb1' not found in the DOM");
-      return;
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
     }
-    // console.log("res", Array.isArray(tb1.data))
-    let output = '';
-    if (tb1.data[0].texts !== '' && tb1.data[1].texts !== '' && tb1.data[2].texts !== '') {
-      // tb1.data.forEach((item, index) => {
-      // //console.log("item", item)
-      output += `
+  });
+}
+
+
+
+function fetchDataTb1() {
+  const action = "table1";
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'fetchtable.php?action=' + action, true);
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        try {
+          var tb1 = JSON.parse(xhr.responseText);
+          displayDataTb1(tb1);
+          console.log("tb1", tb1.data[0].texts);
+        } catch (e) {
+          console.error('Error parsing JSON:', e);
+        }
+      } else {
+        console.error('Failed to fetch data:', xhr.status);
+      }
+    }
+  };
+
+  xhr.send();
+}
+
+function displayDataTb1(tb1) {
+  const tableBody = document.getElementById('displayDataTb1');
+  if (!tableBody) {
+    console.error("Element with ID 'displayDataTb1' not found in the DOM");
+    return;
+  }
+  // console.log("res", Array.isArray(tb1.data))
+  let output = '';
+  if (tb1.data[0].texts !== '' && tb1.data[1].texts !== '' && tb1.data[2].texts !== '') {
+    // tb1.data.forEach((item, index) => {
+    // //console.log("item", item)
+    output += `
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-2 px-4">1</td>
                         <td class="py-2 px-4">${tb1.data[0].texts ?? ''}</td>
@@ -179,48 +184,48 @@
                 `;
 
 
-    } else {
+  } else {
 
-      output = `
+    output = `
             <tr>
                 <td colspan="6" class="text-center py-4 text-gray-500">ไม่พบข้อมูล</td>
             </tr>
         `;
-    }
-
-    // อัปเดตเนื้อหาของตาราง
-    tableBody.innerHTML = output;
   }
 
-
-  function sanitizeHTML(str) {
-    const temp = document.createElement('div');
-    temp.textContent = str;
-    return temp.innerHTML;
-  }
+  // อัปเดตเนื้อหาของตาราง
+  tableBody.innerHTML = output;
+}
 
 
-  function fetchDatacourse_name(formId) {
-    // //console.log(formId)
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 6 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
+function sanitizeHTML(str) {
+  const temp = document.createElement('div');
+  temp.textContent = str;
+  return temp.innerHTML;
+}
 
-          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
-          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
-          const tbody = $('#fetchDatacourse_name'); // อ้างอิง <tbody>
-          tbody.empty();
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              // //console.log("ข้อมูล:", item);
-              const row = `
+
+function fetchDatacourse_name(formId) {
+  // //console.log(formId)
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 6 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
+
+        const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+        // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+        const tbody = $('#fetchDatacourse_name'); // อ้างอิง <tbody>
+        tbody.empty();
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            // //console.log("ข้อมูล:", item);
+            const row = `
               <tr> <!-- เก็บ id เป็น data attribute -->
                 <td>${item.texts}</td> <!-- สมมุติ item มี title -->
                 <td>
@@ -228,42 +233,42 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
-  function fetchDataDegree_name(formId) {
-    // //console.log(formId)
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 7 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
+function fetchDataDegree_name(formId) {
+  // //console.log(formId)
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 7 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
 
-          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
-          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
-          const tbody = $('#fetchDataDegree_name'); // อ้างอิง <tbody>
-          tbody.empty();
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              // //console.log("ข้อมูล:", item);
-              const row = `
+        const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+        // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+        const tbody = $('#fetchDataDegree_name'); // อ้างอิง <tbody>
+        tbody.empty();
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            // //console.log("ข้อมูล:", item);
+            const row = `
               <tr> <!-- เก็บ id เป็น data attribute -->
                 <td>${item.texts}</td> <!-- สมมุติ item มี title -->
                 <td>
@@ -271,42 +276,42 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
-  function fetchDataagency(formId) {
-    // //console.log(formId)
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 8 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
+function fetchDataagency(formId) {
+  // //console.log(formId)
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 8 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
 
-          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
-          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
-          const tbody = $('#fetchDataagency'); // อ้างอิง <tbody>
-          tbody.empty();
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              // //console.log("ข้อมูล:", item);
-              const row = `
+        const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+        // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+        const tbody = $('#fetchDataagency'); // อ้างอิง <tbody>
+        tbody.empty();
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            // //console.log("ข้อมูล:", item);
+            const row = `
               <tr> <!-- เก็บ id เป็น data attribute -->
                 <td>${item.texts}</td> <!-- สมมุติ item มี title -->
                 <td>
@@ -314,42 +319,42 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
-  function fetchDatafirst_open(formId) {
-    // //console.log(formId)
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 9 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
+function fetchDatafirst_open(formId) {
+  // //console.log(formId)
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 9 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
 
-          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
-          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
-          const tbody = $('#fetchDatafirst_open'); // อ้างอิง <tbody>
-          tbody.empty();
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              // //console.log("ข้อมูล:", item);
-              const row = `
+        const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+        // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+        const tbody = $('#fetchDatafirst_open'); // อ้างอิง <tbody>
+        tbody.empty();
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            // //console.log("ข้อมูล:", item);
+            const row = `
               <tr> <!-- เก็บ id เป็น data attribute -->
                 <td>${item.texts}</td> <!-- สมมุติ item มี title -->
                 <td>
@@ -357,42 +362,42 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
-  function fetchDataLast_update_course(formId) {
-    // //console.log(formId)
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 10 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
+function fetchDataLast_update_course(formId) {
+  // //console.log(formId)
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 10 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
 
-          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
-          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
-          const tbody = $('#fetchDataLast_update_course'); // อ้างอิง <tbody>
-          tbody.empty();
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              // //console.log("ข้อมูล:", item);
-              const row = `
+        const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+        // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+        const tbody = $('#fetchDataLast_update_course'); // อ้างอิง <tbody>
+        tbody.empty();
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            // //console.log("ข้อมูล:", item);
+            const row = `
               <tr> <!-- เก็บ id เป็น data attribute -->
                 <td>${item.texts}</td> <!-- สมมุติ item มี title -->
                 <td>
@@ -400,42 +405,42 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
-  function fetchDataclosing_course(formId) {
-    // //console.log(formId)
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 11 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
+function fetchDataclosing_course(formId) {
+  // //console.log(formId)
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 11 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
 
-          const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
-          // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
-          const tbody = $('#fetchDataclosing_course'); // อ้างอิง <tbody>
-          tbody.empty();
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              // //console.log("ข้อมูล:", item);
-              const row = `
+        const fetchedDataArray = data.data; // ข้อมูลที่ดึงมา
+        // //console.log("ข้อมูลทั้งหมดที่ดึงมา:", fetchedDataArray);
+        const tbody = $('#fetchDataclosing_course'); // อ้างอิง <tbody>
+        tbody.empty();
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            // //console.log("ข้อมูล:", item);
+            const row = `
               <tr> <!-- เก็บ id เป็น data attribute -->
                 <td>${item.texts}</td> <!-- สมมุติ item มี title -->
                 <td>
@@ -443,21 +448,21 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
-  <?php
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
+<?php
   // เชื่อมต่อฐานข้อมูล
   $servername = "localhost";
   $username = "root";
@@ -493,53 +498,53 @@
   $conn->close();
   ?>
 
-  function loadCheck() {
-    // ฝังค่าจาก PHP ลงใน JavaScript
-    var col1 = <?php echo $col1; ?>;
-    var col2 = <?php echo $col2; ?>;
-    var col3 = <?php echo $col3; ?>;
-    var col4 = <?php echo $col4; ?>;
-    var col5 = <?php echo $col5; ?>;
-    var col6 = <?php echo $col6; ?>;
-    var col7 = <?php echo $col7; ?>;
-    var col8 = <?php echo $col8; ?>;
-    var col9 = <?php echo $col9; ?>;
-    var col10 = <?php echo $col10; ?>;
-    var col11 = <?php echo $col11; ?>;
-    var col12 = <?php echo $col12; ?>;
-    var col13 = <?php echo $col13; ?>;
+function loadCheck() {
+  // ฝังค่าจาก PHP ลงใน JavaScript
+  var col1 = <?php echo $col1; ?>;
+  var col2 = <?php echo $col2; ?>;
+  var col3 = <?php echo $col3; ?>;
+  var col4 = <?php echo $col4; ?>;
+  var col5 = <?php echo $col5; ?>;
+  var col6 = <?php echo $col6; ?>;
+  var col7 = <?php echo $col7; ?>;
+  var col8 = <?php echo $col8; ?>;
+  var col9 = <?php echo $col9; ?>;
+  var col10 = <?php echo $col10; ?>;
+  var col11 = <?php echo $col11; ?>;
+  var col12 = <?php echo $col12; ?>;
+  var col13 = <?php echo $col13; ?>;
 
-    // ตั้งค่าการเช็คสำหรับแต่ละ checkbox ตามค่าที่ดึงมา
-    $('#col1').prop('checked', col1 == 1);
-    $('#col2').prop('checked', col2 == 1);
-    $('#col3').prop('checked', col3 == 1);
-    $('#col4').prop('checked', col4 == 1);
-    $('#col5').prop('checked', col5 == 1);
-    $('#col6').prop('checked', col6 == 1);
-    $('#col7').prop('checked', col7 == 1);
-    $('#col8').prop('checked', col8 == 1);
-    $('#col9').prop('checked', col9 == 1);
-    $('#col10').prop('checked', col10 == 1);
-    $('#col11').prop('checked', col11 == 1);
-    $('#col12').prop('checked', col12 == 1);
-    $('#col13').prop('checked', col13 == 1);
-  }
+  // ตั้งค่าการเช็คสำหรับแต่ละ checkbox ตามค่าที่ดึงมา
+  $('#col1').prop('checked', col1 == 1);
+  $('#col2').prop('checked', col2 == 1);
+  $('#col3').prop('checked', col3 == 1);
+  $('#col4').prop('checked', col4 == 1);
+  $('#col5').prop('checked', col5 == 1);
+  $('#col6').prop('checked', col6 == 1);
+  $('#col7').prop('checked', col7 == 1);
+  $('#col8').prop('checked', col8 == 1);
+  $('#col9').prop('checked', col9 == 1);
+  $('#col10').prop('checked', col10 == 1);
+  $('#col11').prop('checked', col11 == 1);
+  $('#col12').prop('checked', col12 == 1);
+  $('#col13').prop('checked', col13 == 1);
+}
 
 
-  function fetchDatatopic8() {
-    $.ajax({
-      url: 'fetchtopic8.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // ใช้วิธีการ GET
-      dataType: 'json', // รับข้อมูลเป็น JSON
-      success: function(data) {
-        if (data.response === 'success') {
-          console.log("topic 8", data);
-          const tbody = $('#fetchDatatopic8'); // อ้างอิง <tbody>
-          tbody.empty(); // ล้างข้อมูลเดิมออก
+function fetchDatatopic8() {
+  $.ajax({
+    url: 'fetchtopic8.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // ใช้วิธีการ GET
+    dataType: 'json', // รับข้อมูลเป็น JSON
+    success: function(data) {
+      if (data.response === 'success') {
+        console.log("topic 8", data);
+        const tbody = $('#fetchDatatopic8'); // อ้างอิง <tbody>
+        tbody.empty(); // ล้างข้อมูลเดิมออก
 
-          if (data.data.length > 0) {
-            data.data.forEach((item, index) => {
-              let row = `
+        if (data.data.length > 0) {
+          data.data.forEach((item, index) => {
+            let row = `
                 <tr> 
                   <td>${index + 1}</td>  
                   <td>${item.type}</td> 
@@ -556,50 +561,50 @@
                     <button class="btn btn-danger delete-btn" onclick="deletetopic8(${item.id})">ลบ</button>
                   </td>
                 </tr>`;
-              tbody.append(row); // เพิ่มข้อมูลเข้าไปใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="10" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มข้อมูลเข้าไปใน <tbody>
+          });
+        } else {
+          tbody.append('<tr><td colspan="10" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', xhr, status, error);
       }
-    });
-  }
-
-  function fetchDataTb9_3() {
-    const action = "table9_3";
-
-    fetch(`fetchtable.php?action=${action}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log("Received data:", data.data);
-        displayDataTb9_3(data); // Uncomment this when needed
-      })
-      .catch(error => console.error("Error fetching data:", error));
-  }
-
-
-  function displayDataTb9_3(data) {
-    const tableBody = document.getElementById('displayDataTb9_3');
-    if (!tableBody) {
-      console.error("Element with ID 'displayDataTb9_3' not found in the DOM");
-      return;
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', xhr, status, error);
     }
+  });
+}
 
-    let output = '';
+function fetchDataTb9_3() {
+  const action = "table9_3";
 
-    if (data.data.length > 0) {
-      data.data.forEach((item, index) => {
-        console.log("Item:", item);
-        output += `
+  fetch(`fetchtable.php?action=${action}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("Received data:", data.data);
+      displayDataTb9_3(data); // Uncomment this when needed
+    })
+    .catch(error => console.error("Error fetching data:", error));
+}
+
+
+function displayDataTb9_3(data) {
+  const tableBody = document.getElementById('displayDataTb9_3');
+  if (!tableBody) {
+    console.error("Element with ID 'displayDataTb9_3' not found in the DOM");
+    return;
+  }
+
+  let output = '';
+
+  if (data.data.length > 0) {
+    data.data.forEach((item, index) => {
+      console.log("Item:", item);
+      output += `
             <tr class="border-b hover:bg-gray-50">
                 <td class="py-2 px-4">${item.row1 ?? ''}</td>
                 <td class="py-2 px-4">${item.row2 ?? ''}</td>
@@ -610,47 +615,47 @@
                     <button class="action-btn delete-btn btn btn-danger" onclick="deletetable9_3(${item.id})">ลบ</button>
                 </td>
             </tr>`;
-      });
-    } else {
-      output = `
+    });
+  } else {
+    output = `
         <tr>
             <td colspan="4" class="text-center py-4 text-gray-500">ไม่พบข้อมูล</td>
         </tr>`;
-    }
-
-    // อัปเดตเนื้อหาของตาราง   
-    tableBody.innerHTML = output;
   }
 
-
-  function sanitizeHTML(str) {
-    const temp = document.createElement('div');
-    temp.textContent = str;
-    return temp.innerH
-  }
+  // อัปเดตเนื้อหาของตาราง   
+  tableBody.innerHTML = output;
+}
 
 
-  function fetchDataother(formId) {
-    console.log("fetchDataother");
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 12 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
-          console.log("fetchDataother", data.data);
-          const fetchedDataArray = data.data; // array of objects ที่ได้รับ
-          const tbody = $('#fetchDataother'); // อ้างอิง <tbody>
-          tbody.empty(); // ล้างข้อมูลเดิมในตาราง
+function sanitizeHTML(str) {
+  const temp = document.createElement('div');
+  temp.textContent = str;
+  return temp.innerH
+}
 
-          // ตรวจสอบข้อมูลและแสดงผล
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              const row = `
+
+function fetchDataother(formId) {
+  console.log("fetchDataother");
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 12 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
+        console.log("fetchDataother", data.data);
+        const fetchedDataArray = data.data; // array of objects ที่ได้รับ
+        const tbody = $('#fetchDataother'); // อ้างอิง <tbody>
+        tbody.empty(); // ล้างข้อมูลเดิมในตาราง
+
+        // ตรวจสอบข้อมูลและแสดงผล
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            const row = `
               <tr>
                 <td>${item.texts}</td> <!-- แสดง texts -->
                 <td>
@@ -658,42 +663,42 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
-  function fetchDataapproval_result(formId) {
-    console.log("fetchDataapproval_result");
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 13 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
-          console.log("fetchDataapproval_result", data.data);
-          const fetchedDataArray = data.data; // array of objects ที่ได้รับ
-          const tbody = $('#fetchDataapproval_result'); // อ้างอิง <tbody>
-          tbody.empty(); // ล้างข้อมูลเดิมในตาราง
+function fetchDataapproval_result(formId) {
+  console.log("fetchDataapproval_result");
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 13 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
+        console.log("fetchDataapproval_result", data.data);
+        const fetchedDataArray = data.data; // array of objects ที่ได้รับ
+        const tbody = $('#fetchDataapproval_result'); // อ้างอิง <tbody>
+        tbody.empty(); // ล้างข้อมูลเดิมในตาราง
 
-          // ตรวจสอบข้อมูลและแสดงผล
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              const row = `
+        // ตรวจสอบข้อมูลและแสดงผล
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            const row = `
               <tr>
                 <td>${item.texts}</td> <!-- แสดง texts -->
                 <td>
@@ -701,42 +706,42 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
-  function fetchDatapropos_issue(formId) {
-    console.log("fetchDatapropos_issue");
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 14 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
-          console.log("fetchDatapropos_issue", data.data);
-          const fetchedDataArray = data.data; // array of objects ที่ได้รับ
-          const tbody = $('#fetchDatapropos_issue'); // อ้างอิง <tbody>
-          tbody.empty(); // ล้างข้อมูลเดิมในตาราง
+function fetchDatapropos_issue(formId) {
+  console.log("fetchDatapropos_issue");
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 14 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
+        console.log("fetchDatapropos_issue", data.data);
+        const fetchedDataArray = data.data; // array of objects ที่ได้รับ
+        const tbody = $('#fetchDatapropos_issue'); // อ้างอิง <tbody>
+        tbody.empty(); // ล้างข้อมูลเดิมในตาราง
 
-          // ตรวจสอบข้อมูลและแสดงผล
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              const row = `
+        // ตรวจสอบข้อมูลและแสดงผล
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            const row = `
               <tr>
                 <td>${item.texts}</td> <!-- แสดง texts -->
                 <td>
@@ -744,42 +749,42 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 
-  function fetchDatamati(formId) {
-    console.log("fetchDatamati");
-    $.ajax({
-      url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      data: {
-        action: 'getform', // ส่งค่า action ไปด้วย
-        formId: formId ?? 15 // ส่ง formId ไปด้วย
-      },
-      success: function(data) {
-        if (data.response === 'success') {
-          console.log("fetchDatamati", data.data);
-          const fetchedDataArray = data.data; // array of objects ที่ได้รับ
-          const tbody = $('#fetchDatamati'); // อ้างอิง <tbody>
-          tbody.empty(); // ล้างข้อมูลเดิมในตาราง
+function fetchDatamati(formId) {
+  console.log("fetchDatamati");
+  $.ajax({
+    url: 'fetch_data.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    data: {
+      action: 'getform', // ส่งค่า action ไปด้วย
+      formId: formId ?? 15 // ส่ง formId ไปด้วย
+    },
+    success: function(data) {
+      if (data.response === 'success') {
+        console.log("fetchDatamati", data.data);
+        const fetchedDataArray = data.data; // array of objects ที่ได้รับ
+        const tbody = $('#fetchDatamati'); // อ้างอิง <tbody>
+        tbody.empty(); // ล้างข้อมูลเดิมในตาราง
 
-          // ตรวจสอบข้อมูลและแสดงผล
-          if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
-            fetchedDataArray.forEach((item) => {
-              const row = `
+        // ตรวจสอบข้อมูลและแสดงผล
+        if (fetchedDataArray.length > 0 && fetchedDataArray[0].texts !== '') {
+          fetchedDataArray.forEach((item) => {
+            const row = `
               <tr>
                 <td>${item.texts}</td> <!-- แสดง texts -->
                 <td>
@@ -787,20 +792,20 @@
                   <button class="btn btn-danger delete-btn" onclick="ondelete(${item.sid})">ลบ</button>
                 </td>
               </tr>`;
-              tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
-            });
-          } else {
-            tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
-          }
+            tbody.append(row); // เพิ่มแถวใหม่ใน <tbody>
+          });
         } else {
-          console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+          tbody.append('<tr><td colspan="2" class="text-center">ไม่มีข้อมูล</td></tr>');
         }
-      },
-      error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
       }
-    });
-  }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error);
+    }
+  });
+}
 </script>
 
 <body>
@@ -1097,7 +1102,8 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="col13" value="1">
             <label class="form-check-label">
-              อื่นๆ (ระบุ) ตั้งแต่เริ่มเปิดหลักสูตรปี พ.ศ. 2563 จนถึงปัจจุบัน จำนวนนิสิตสมัครเข้าศึกษาในหลักสูตรน้อยไม่ถึงจุดคุ้มทุนที่หลักสูตรกำหนด คือ ปีการศึกษาละ 10 คน
+              อื่นๆ (ระบุ) ตั้งแต่เริ่มเปิดหลักสูตรปี พ.ศ. 2563 จนถึงปัจจุบัน
+              จำนวนนิสิตสมัครเข้าศึกษาในหลักสูตรน้อยไม่ถึงจุดคุ้มทุนที่หลักสูตรกำหนด คือ ปีการศึกษาละ 10 คน
             </label>
           </div>
           <button class="btn btn-success mt-2" onclick="saveCheck()">บันทึก</button>
@@ -1162,28 +1168,30 @@
         <div class="section mt-4 form-check">
           <label for="improv_info4">9.หน่วยงานต้นสังกัด มีแผนดำเนินการหลังปิดหลักสูตร ดังนี้</label><br>
           <label>9.1 รายวิชาของหลักสูตรที่ขอปิด ประสงค์ให้</label>
-          <div>
-            <input type="radio">
-            <label class="form-check-label" for="flexCheckDefault">
-              <b>ปิดรายวิชาในหลักสูตรทั้งหมด</b> (ทั้งนี้ต้องไม่มีผลกระทบกับการเรียนการสอนในหลักสูตรอื่น ๆ ของมหาวิทยาลัย)
+          <div class="form-check">
+            <input class="form-check-input" name="9-1" type="radio" id="closed" value="0">
+            <label class="form-check-label" for="closed">
+              <b>ปิดรายวิชาในหลักสูตรทั้งหมด</b> (ทั้งนี้ต้องไม่มีผลกระทบกับการเรียนการสอนในหลักสูตรอื่น ๆ
+              ของมหาวิทยาลัย)
             </label>
           </div>
-          <div>
-            <input type="radio">
-            <label class="form-check-label" for="flexCheckDefault">
-              <b>ขอคงรายวิชาในหลักสูตรไว้</b> เนื่องจาก (ระบุเหตุผลของการขอคงชื่อหลักสูตร/สาขาวิชาที่ขอใช้รายวิชาของหลักสูตรที่ขอปิด)
+          <div class="form-check">
+            <input class="form-check-input" name="9-1" type="radio" id="maintain" value="0">
+            <label class="form-check-label" for="maintain">
+              <b> </b> เนื่องจาก
+              (ระบุเหตุผลของการขอคงชื่อหลักสูตร/สาขาวิชาที่ขอใช้รายวิชาของหลักสูตรที่ขอปิด)
             </label>
           </div>
 
           <label class="mt-3">9.2จำนวนนิสิตคงค้างแยกตามชั้นปี (โปรดแยกระบบ/แผนการศึกษา ถ้ามี)</label>
           <div class="form-check">
-            <input class="form-check-input" name="1" type="checkbox" id="noStudents">
+            <input class="form-check-input" name="9-2" type="radio" id="noStudents">
             <label class="form-check-label" for="noStudents">
               <b>ไม่มีนิสิตคงค้าง</b>
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" name="2" type="checkbox" id="hasStudents">
+            <input class="form-check-input" name="9-2" type="radio" id="hasStudents">
             <label class="form-check-label" for="hasStudents">
               มีนิสิตคงค้าง รายละเอียดดังนี้
             </label>
@@ -1397,23 +1405,24 @@
           </div>
 
           <script>
-            $(document).ready(function() {
-              $('#hasStudents').change(function() {
-                if ($(this).is(':checked')) {
-                  $('#studentDetails').show();
-                } else {
-                  $('#studentDetails').hide();
-                }
-              });
-              $('#noStudents').change(function() {
-                if ($(this).is(':checked')) {
-                  $('#studentDetails').hide();
-                }
-              });
+          $(document).ready(function() {
+            $('#hasStudents').change(function() {
+              if ($(this).is(':checked')) {
+                $('#studentDetails').show();
+              } else {
+                $('#studentDetails').hide();
+              }
             });
+            $('#noStudents').change(function() {
+              if ($(this).is(':checked')) {
+                $('#studentDetails').hide();
+              }
+            });
+          });
           </script>
           </script>
-          <label for="">9.3 การจัดสรรอัตรากำลังใหม่ หลังจากปิดหลักสูตรแล้ว</label>
+          <br>
+          <label for="" class="">9.3 การจัดสรรอัตรากำลังใหม่ หลังจากปิดหลักสูตรแล้ว</label>
           <div class="card-body">
             <label for="Teacher">อาจารย์ผู้รับผิดชอบหลักสูตร/อาจารย์ประจำหลักสูตรที่ขอปิด*</label>
             <textarea id="Teacher" class="form-control"></textarea>
@@ -1428,7 +1437,8 @@
               <thead class='bg-gray-200 text-gray-600'>
                 <tr>
                   <th class='py-2 px-4 border-b font-k2d'>อาจารย์ผู้รับผิดชอบหลักสูตร/อาจารย์ประจำหลักสูตรที่ขอปิด*</th>
-                  <th class='py-2 px-4 border-b font-k2d'>ภาระงานสอนในปัจจุบัน/อาจารย์ประจำหลักสูตรอื่น (ระบุชื่อหลักสูตร)</th>
+                  <th class='py-2 px-4 border-b font-k2d'>ภาระงานสอนในปัจจุบัน/อาจารย์ประจำหลักสูตรอื่น
+                    (ระบุชื่อหลักสูตร)</th>
                   <th class='py-2 px-4 border-b font-k2d'>แก้ไข</th>
                   <th class='py-2 px-4 border-b font-k2d'>ลบ</th>
                 </tr>
@@ -1518,436 +1528,469 @@
   </div>
 </body>
 <script>
-  $('#title,#reasons,  #origin_info, #new_info, #Closing_content,#course_name,#Degree_name,#agency,#first_open,#Last_update_course,#closing_course,Guidelines,#Teacher,#teaching_load,#other,#approval_result,#propos_issue, #mati').summernote({
+$('#title,#reasons,  #origin_info, #new_info, #Closing_content,#course_name,#Degree_name,#agency,#first_open,#Last_update_course,#closing_course,Guidelines,#Teacher,#teaching_load,#other,#approval_result,#propos_issue, #mati')
+  .summernote({
     height: 120,
   });
 
-  function saveData(selector, formId) {
-    var data = $(selector).summernote('code'); // Get the content
-    console.log(data);
+function saveData(selector, formId) {
+  var data = $(selector).summernote('code'); // Get the content
+  console.log(data);
 
-    // Check if content is empty or not
-    if (data.trim() === "" || data.trim() === "<p><br></p>") {
-      alert('เนื้อหาว่างเปล่า กรุณาเพิ่มข้อมูลก่อนบันทึก.');
-      return; // Exit the function if content is empty
+  // Check if content is empty or not
+  if (data.trim() === "" || data.trim() === "<p><br></p>") {
+    alert('เนื้อหาว่างเปล่า กรุณาเพิ่มข้อมูลก่อนบันทึก.');
+    return; // Exit the function if content is empty
+  }
+
+  // var encodedData = btoa(unescape(encodeURIComponent(data))); // Encode in Base64
+
+  $.ajax({
+    type: 'POST',
+    url: 'insert.php',
+    dataType: 'json',
+    data: {
+      action: 'saveform',
+      data: data,
+      formId: formId // Send form ID to identify which form is being saved
+    },
+    success: function(response) {
+      alert("บันทึกข้อมูลแล้ว"); // Handle success response
+      // console.log(response)
+      loadData();
+
+    },
+    error: function(xhr, status, error) {
+      console.log('เกิดข้อผิดพลาดในการบันทึกข้อมูล.', status, error);
+      alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล.', xhr, status, error);
     }
+  });
+}
+// Attach click event handlers dynamically to buttons
+$('[id^="save"]').click(function() {
+  console.log("click")
+  var formId = $(this).data('form-id'); // Get form ID from the button's data attribute
+  var relatedInputId = $(this).attr('id').replace('save', ''); // Extract the related input ID
+  var selector = '#' + relatedInputId; // Create the selector dynamically
 
-    // var encodedData = btoa(unescape(encodeURIComponent(data))); // Encode in Base64
+  saveData(selector, formId); // Call the save function with dynamic selector and form ID
+});
 
-    $.ajax({
-      type: 'POST',
-      url: 'insert.php',
-      dataType: 'json',
-      data: {
-        action: 'saveform',
-        data: data,
-        formId: formId // Send form ID to identify which form is being saved
-      },
-      success: function(response) {
-        alert("บันทึกข้อมูลแล้ว"); // Handle success response
-        // console.log(response)
+// table 1
+$('#Tablesave1').on('click', function() {
+
+  const origin_Info = $('#origin_info').val();
+  const new_info = $('#new_info').val();
+  const Closing_content = $('#Closing_content').val();
+
+  console.log("table1")
+  if (!origin_Info && !new_info && !Closing_content) {
+    alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
+    return;
+  }
+  $.ajax({
+    url: 'insert.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      action: 'Allsave',
+      origin_Info: origin_Info,
+      new_info: new_info,
+      Closing_content: Closing_content
+    },
+    success: function(response) {
+      console.log("ผลลัพธ์จากเซิร์ฟเวอร์:", response);
+
+      if (response.response === 'Data saved successfully!') {
+        alert('บันทึกข้อมูลเรียบร้อยแล้ว');
+        fetchDataTb1()
+      } else {
+        alert(`เกิดข้อผิดพลาด: ${result.message || 'ไม่ทราบสาเหตุ'}`);
+
+      }
+    }
+  }, );
+
+});
+
+function saveCheck() {
+  // ดึงค่าจาก Checkbox
+  var checkboxData = {
+    col1: $('#col1').is(':checked') ? 1 : 0,
+    col2: $('#col2').is(':checked') ? 1 : 0,
+    col3: $('#col3').is(':checked') ? 1 : 0,
+    col4: $('#col4').is(':checked') ? 1 : 0,
+    col5: $('#col5').is(':checked') ? 1 : 0,
+    col6: $('#col6').is(':checked') ? 1 : 0,
+    col7: $('#col7').is(':checked') ? 1 : 0,
+    col8: $('#col8').is(':checked') ? 1 : 0,
+    col9: $('#col9').is(':checked') ? 1 : 0,
+    col10: $('#col10').is(':checked') ? 1 : 0,
+    col11: $('#col11').is(':checked') ? 1 : 0,
+    col12: $('#col12').is(':checked') ? 1 : 0,
+    col13: $('#col13').is(':checked') ? 1 : 0
+  };
+  console.log(checkboxData)
+  // ส่งข้อมูลผ่าน AJAX
+  $.ajax({
+    type: 'POST',
+    url: 'saveCheck.php',
+    dataType: 'json',
+    data: checkboxData, // ส่งข้อมูล checkbox ไปที่ PHP
+    success: function(response) {
+      alert("บันทึกข้อมูลแล้ว");
+    },
+    error: function(xhr, status, error) {
+      console.log('เกิดข้อผิดพลาดในการบันทึกข้อมูล.', status, error);
+      alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล.');
+    }
+  });
+}
+let currentId = null;
+
+function saveTopic8() {
+  if ($("#type").val().trim() === "") {
+    alert("กรุณากรอกข้อมูลประเภท");
+    return;
+  }
+  $.ajax({
+    type: 'POST',
+    url: 'insert.php',
+    dataType: 'json',
+    data: {
+      id: currentId ?? null,
+      action: 'saveTopic8',
+      type: $("#type").val(),
+      people: $("#people").val(),
+      year1: $("#2563").val(),
+      year2: $("#2564").val(),
+      year3: $("#2565").val(),
+      year4: $("#2566").val(),
+      year5: $("#2567").val(),
+    },
+    success: function(response) {
+      console.log("✅ Response from server:", response);
+      alert("บันทึกข้อมูลเรียบร้อย");
+      fetchDatatopic8();
+      currentId = response.id
+    },
+    error: function(xhr, status, error) {
+      console.log(xhr.responseText);
+      alert("❌ เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+      console.log("❌ Error details:", xhr, status, error);
+    }
+  });
+}
+
+// table 2
+$('#Tablesave9_3').on('click', function() {
+
+  const Teacher = $('#Teacher').val();
+  const teaching_load = $('#teaching_load').val();
+
+
+  console.log("table9_3")
+  if (!Teacher && !teaching_load) {
+    alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
+    return;
+  }
+  $.ajax({
+    url: 'insert.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      action: 'table9_3',
+      Teacher: Teacher,
+      teaching_load: teaching_load,
+      id: currentId ?? null,
+    },
+    success: function(response) {
+      console.log("ผลลัพธ์จากเซิร์ฟเวอร์:", response);
+
+      if (response.response === 'Data saved successfully!') {
+        alert('บันทึกข้อมูลเรียบร้อยแล้ว');
         loadData();
-
-      },
-      error: function(xhr, status, error) {
-        console.log('เกิดข้อผิดพลาดในการบันทึกข้อมูล.', status, error);
-        alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล.', xhr, status, error);
-      }
-    });
-  }
-  // Attach click event handlers dynamically to buttons
-  $('[id^="save"]').click(function() {
-    console.log("click")
-    var formId = $(this).data('form-id'); // Get form ID from the button's data attribute
-    var relatedInputId = $(this).attr('id').replace('save', ''); // Extract the related input ID
-    var selector = '#' + relatedInputId; // Create the selector dynamically
-
-    saveData(selector, formId); // Call the save function with dynamic selector and form ID
-  });
-
-  // table 1
-  $('#Tablesave1').on('click', function() {
-
-    const origin_Info = $('#origin_info').val();
-    const new_info = $('#new_info').val();
-    const Closing_content = $('#Closing_content').val();
-
-    console.log("table1")
-    if (!origin_Info && !new_info && !Closing_content) {
-      alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
-      return;
-    }
-    $.ajax({
-      url: 'insert.php',
-      type: 'POST',
-      dataType: 'json',
-      data: {
-        action: 'Allsave',
-        origin_Info: origin_Info,
-        new_info: new_info,
-        Closing_content: Closing_content
-      },
-      success: function(response) {
-        console.log("ผลลัพธ์จากเซิร์ฟเวอร์:", response);
-
-        if (response.response === 'Data saved successfully!') {
-          alert('บันทึกข้อมูลเรียบร้อยแล้ว');
-          fetchDataTb1()
-        } else {
-          alert(`เกิดข้อผิดพลาด: ${result.message || 'ไม่ทราบสาเหตุ'}`);
-
-        }
-      }
-    }, );
-
-  });
-
-  function saveCheck() {
-    // ดึงค่าจาก Checkbox
-    var checkboxData = {
-      col1: $('#col1').is(':checked') ? 1 : 0,
-      col2: $('#col2').is(':checked') ? 1 : 0,
-      col3: $('#col3').is(':checked') ? 1 : 0,
-      col4: $('#col4').is(':checked') ? 1 : 0,
-      col5: $('#col5').is(':checked') ? 1 : 0,
-      col6: $('#col6').is(':checked') ? 1 : 0,
-      col7: $('#col7').is(':checked') ? 1 : 0,
-      col8: $('#col8').is(':checked') ? 1 : 0,
-      col9: $('#col9').is(':checked') ? 1 : 0,
-      col10: $('#col10').is(':checked') ? 1 : 0,
-      col11: $('#col11').is(':checked') ? 1 : 0,
-      col12: $('#col12').is(':checked') ? 1 : 0,
-      col13: $('#col13').is(':checked') ? 1 : 0
-    };
-    console.log(checkboxData)
-    // ส่งข้อมูลผ่าน AJAX
-    $.ajax({
-      type: 'POST',
-      url: 'saveCheck.php',
-      dataType: 'json',
-      data: checkboxData, // ส่งข้อมูล checkbox ไปที่ PHP
-      success: function(response) {
-        alert("บันทึกข้อมูลแล้ว");
-      },
-      error: function(xhr, status, error) {
-        console.log('เกิดข้อผิดพลาดในการบันทึกข้อมูล.', status, error);
-        alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล.');
-      }
-    });
-  }
-  let currentId = null;
-
-  function saveTopic8() {
-    if ($("#type").val().trim() === "") {
-      alert("กรุณากรอกข้อมูลประเภท");
-      return;
-    }
-    $.ajax({
-      type: 'POST',
-      url: 'insert.php',
-      dataType: 'json',
-      data: {
-        id: currentId ?? null,
-        action: 'saveTopic8',
-        type: $("#type").val(),
-        people: $("#people").val(),
-        year1: $("#2563").val(),
-        year2: $("#2564").val(),
-        year3: $("#2565").val(),
-        year4: $("#2566").val(),
-        year5: $("#2567").val(),
-      },
-      success: function(response) {
-        console.log("✅ Response from server:", response);
-        alert("บันทึกข้อมูลเรียบร้อย");
-        fetchDatatopic8();
+        console.log("response", response)
         currentId = response.id
-      },
-      error: function(xhr, status, error) {
-        console.log(xhr.responseText);
-        alert("❌ เกิดข้อผิดพลาดในการบันทึกข้อมูล");
-        console.log("❌ Error details:", xhr, status, error);
+      } else {
+        alert(`เกิดข้อผิดพลาด: ${result.message || 'ไม่ทราบสาเหตุ'}`);
+
       }
-    });
-  }
-
-  // table 2
-  $('#Tablesave9_3').on('click', function() {
-
-    const Teacher = $('#Teacher').val();
-    const teaching_load = $('#teaching_load').val();
-
-
-    console.log("table9_3")
-    if (!Teacher && !teaching_load) {
-      alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
-      return;
     }
-    $.ajax({
-      url: 'insert.php',
-      type: 'POST',
-      dataType: 'json',
-      data: {
-        action: 'table9_3',
-        Teacher: Teacher,
-        teaching_load: teaching_load,
-        id: currentId ?? null,
-      },
-      success: function(response) {
-        console.log("ผลลัพธ์จากเซิร์ฟเวอร์:", response);
+  }, );
 
-        if (response.response === 'Data saved successfully!') {
-          alert('บันทึกข้อมูลเรียบร้อยแล้ว');
-          loadData();
-          console.log("response", response)
-          currentId = response.id
-        } else {
-          alert(`เกิดข้อผิดพลาด: ${result.message || 'ไม่ทราบสาเหตุ'}`);
+});
 
-        }
-      }
-    }, );
+document.querySelectorAll('input[name="9-1"]').forEach((radio) => {
+  radio.addEventListener("change", function() {
+    let closed = document.getElementById("closed").checked ? 1 : 0;
+    let maintain = document.getElementById("maintain").checked ? 1 : 0;
 
+    handleSelection(closed, maintain);
   });
+});
+
+function handleSelection(closed, maintain) {
+  // console.log("ค่าที่เลือก:", value);
+  console.log("ปิดรายวิชาในหลักสูตรทั้งหมด :", closed);
+  console.log("ขอคงรายวิชาในหลักสูตรไว้ :", maintain);
+}
 
 
-  ////////////////////////  EDIT HEREE
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  $(document).on('click', '.edit-btn', function() {
-    const Id = $(this).attr('id').replace('edit', '');
-    //console.log("Editor ID:", Id);
+document.querySelectorAll('input[name="9-2"]').forEach((radio) => {
+  radio.addEventListener("change", function() {
+    let noStudentsValue = document.getElementById("noStudents").checked ? 1 : 0;
+    let hasStudentsValue = document.getElementById("hasStudents").checked ? 1 : 0;
 
-    const formId = $(this).data('form-id'); // Get form ID from the button
-    //console.log("Form ID:", formId);
-
-    // Fetch data for the given form ID
-    $.ajax({
-      url: 'fetch_data.php', // Endpoint for fetching data
-      type: 'GET',
-      dataType: 'json',
-      data: {
-        formId: formId,
-        action: 'getform' // Specify the action
-      },
-      success: function(response) {
-        console.log(response)
-        $('#' + Id).summernote('code', response.data[0].texts);
-      },
-      error: function(xhr, status, error) {
-        console.error("Error details:", {
-          xhr,
-          status,
-          error
-        });
-        alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
-      }
-    });
+    handleSelection2(noStudentsValue, hasStudentsValue);
   });
+});
 
-  function edittable1() {
-    const action = "table1";
+function handleSelection2(noStudents, hasStudents) {
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'fetchtable.php?action=' + action, true);
+  console.log("ไม่มีนิสิตคงค้าง:", noStudents);
+  console.log("มีนิสิตคงค้าง:", hasStudents);
+}
 
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          try {
-            var tb1 = JSON.parse(xhr.responseText);
-            console.log("edit", tb1)
-            $('#origin_info').summernote('code', tb1.data[0].texts || '');
-            $('#new_info').summernote('code', tb1.data[1].texts || '');
-            $('#Closing_content').summernote('code', tb1.data[2].texts || '');
-          } catch (e) {
-            console.error('Error parsing JSON:', e);
-          }
-        } else {
-          console.error('Failed to fetch data:', xhr.status);
+
+
+////////////////////////  EDIT HEREE
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$(document).on('click', '.edit-btn', function() {
+  const Id = $(this).attr('id').replace('edit', '');
+  //console.log("Editor ID:", Id);
+
+  const formId = $(this).data('form-id'); // Get form ID from the button
+  //console.log("Form ID:", formId);
+
+  // Fetch data for the given form ID
+  $.ajax({
+    url: 'fetch_data.php', // Endpoint for fetching data
+    type: 'GET',
+    dataType: 'json',
+    data: {
+      formId: formId,
+      action: 'getform' // Specify the action
+    },
+    success: function(response) {
+      console.log(response)
+      $('#' + Id).summernote('code', response.data[0].texts);
+    },
+    error: function(xhr, status, error) {
+      console.error("Error details:", {
+        xhr,
+        status,
+        error
+      });
+      alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+    }
+  });
+});
+
+function edittable1() {
+  const action = "table1";
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'fetchtable.php?action=' + action, true);
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        try {
+          var tb1 = JSON.parse(xhr.responseText);
+          console.log("edit", tb1)
+          $('#origin_info').summernote('code', tb1.data[0].texts || '');
+          $('#new_info').summernote('code', tb1.data[1].texts || '');
+          $('#Closing_content').summernote('code', tb1.data[2].texts || '');
+        } catch (e) {
+          console.error('Error parsing JSON:', e);
         }
+      } else {
+        console.error('Failed to fetch data:', xhr.status);
       }
-    };
-
-    xhr.send();
+    }
   };
 
-  function edittopic8(id) {
-    $.ajax({
-      url: 'fetchtopic8.php', // URL ของ PHP ที่จะดึงข้อมูล
-      type: 'GET', // การส่งข้อมูลแบบ GET
-      dataType: 'json',
-      // กำหนดให้รับข้อมูลในรูปแบบ JSON
-      success: function(data) {
-        if (data.response === 'success') {
-          console.log("topic 8", data.data[0].type);
-          const item = data.data.find(d => d.id === id);
-          if (item) {
-            $("#type").val(item.type);
-            $("#people").val(item.admission_plan);
-            $("#2563").val(item.year1);
-            $("#2564").val(item.year2);
-            $("#2565").val(item.year3);
-            $("#2566").val(item.year4);
-            $("#2567").val(item.year5);
-            currentId = id;
-          } else {
-            console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
-          }
+  xhr.send();
+};
+
+function edittopic8(id) {
+  $.ajax({
+    url: 'fetchtopic8.php', // URL ของ PHP ที่จะดึงข้อมูล
+    type: 'GET', // การส่งข้อมูลแบบ GET
+    dataType: 'json',
+    // กำหนดให้รับข้อมูลในรูปแบบ JSON
+    success: function(data) {
+      if (data.response === 'success') {
+        console.log("topic 8", data.data[0].type);
+        const item = data.data.find(d => d.id === id);
+        if (item) {
+          $("#type").val(item.type);
+          $("#people").val(item.admission_plan);
+          $("#2563").val(item.year1);
+          $("#2564").val(item.year2);
+          $("#2565").val(item.year3);
+          $("#2566").val(item.year4);
+          $("#2567").val(item.year5);
+          currentId = id;
         } else {
           console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
         }
+      } else {
+        console.error('ไม่พบข้อมูลในฐานข้อมูล:', data);
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', xhr, status, error);
+    }
+  });
+
+}
+
+function edittable9_3(id) {
+  const action = "table9_3";
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'fetchtable.php?action=' + action, true);
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        try {
+          var data = JSON.parse(xhr.responseText);
+          const item = data.data.find(d => d.id === id);
+          console.log("edit", item)
+          $('#Teacher').summernote('code', item.row1 || '');
+          $('#teaching_load').summernote('code', item.row2 || '');
+        } catch (e) {
+          console.error('Error parsing JSON:', e);
+        }
+      } else {
+        console.error('Failed to fetch data:', xhr.status);
+      }
+    }
+  };
+
+  xhr.send();
+};
+
+///////////////////////////// DELETE BELOW
+/////////////////////////////////////////////////////////////  
+function ondelete(formId) {
+  if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
+    $.ajax({
+      type: 'POST',
+      url: 'delete.php',
+      dataType: 'json', // Expect JSON response
+      data: {
+        action: 'deleteform',
+        formId: formId,
+      },
+      success: function(response) {
+        if (response.status === 'success') {
+          alert('ลบข้อมูลสำเร็จ');
+          loadData();
+        } else {
+          alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
+        }
       },
       error: function(xhr, status, error) {
-        console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', xhr, status, error);
+        console.error('Error:', xhr.responseText); // Check server response
+        alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+        loadData();
       }
     });
 
   }
-
-  function edittable9_3(id) {
-    const action = "table9_3";
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'fetchtable.php?action=' + action, true);
-
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          try {
-            var data = JSON.parse(xhr.responseText);
-            const item = data.data.find(d => d.id === id);
-            console.log("edit", item)
-            $('#Teacher').summernote('code', item.row1 || '');
-            $('#teaching_load').summernote('code', item.row2 || '');
-          } catch (e) {
-            console.error('Error parsing JSON:', e);
-          }
-        } else {
-          console.error('Failed to fetch data:', xhr.status);
-        }
-      }
-    };
-
-    xhr.send();
-  };
-
-  ///////////////////////////// DELETE BELOW
-  /////////////////////////////////////////////////////////////  
-  function ondelete(formId) {
-    if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
-      $.ajax({
-        type: 'POST',
-        url: 'delete.php',
-        dataType: 'json', // Expect JSON response
-        data: {
-          action: 'deleteform',
-          formId: formId,
-        },
-        success: function(response) {
-          if (response.status === 'success') {
-            alert('ลบข้อมูลสำเร็จ');
-            loadData();
-          } else {
-            alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('Error:', xhr.responseText); // Check server response
-          alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
-          loadData();
-        }
-      });
-
-    }
-  }
+}
 
 
-  function deletetable1() {
-    if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
-      $.ajax({
-        type: 'POST',
-        url: 'delete.php',
-        dataType: 'json', // Expect JSON response
-        data: {
-          action: 'deletetable1',
-        },
-        success: function(response) {
-          if (response.status === 'success') {
-            alert('ลบข้อมูลสำเร็จ');
-            loadData();
-          } else {
-            alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
-            loadData();
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('Error:', xhr.responseText); // Check server response
-          alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
-          loadData();
-        }
-      });
-
-    }
-  }
-
-  function deletetopic8(id) {
-    if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
-      $.ajax({
-        type: 'POST',
-        url: 'delete.php',
-        dataType: 'json', // Expect JSON response
-        data: {
-          action: 'topic8',
-          id: id
-        },
-        success: function(response) {
-          if (response.status === 'success') {
-            alert('ลบข้อมูลสำเร็จ');
-            loadData();
-          } else {
-            alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
-            loadData();
-          }
-        },
-        error: function(xhr, status, error) {
-          console.log('Error:', xhr, status, error); // Check server response
-          // alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+function deletetable1() {
+  if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
+    $.ajax({
+      type: 'POST',
+      url: 'delete.php',
+      dataType: 'json', // Expect JSON response
+      data: {
+        action: 'deletetable1',
+      },
+      success: function(response) {
+        if (response.status === 'success') {
           alert('ลบข้อมูลสำเร็จ');
-          location.reload();
-        }
-      });
-
-    }
-  }
-
-  function deletetable9_3(id) {
-    if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
-      $.ajax({
-        type: 'POST',
-        url: 'delete.php',
-        dataType: 'json', // Expect JSON response
-        data: {
-          action: 'deletetable9_3',
-          id: id
-        },
-        success: function(response) {
-          if (response.status === 'success') {
-            alert('ลบข้อมูลสำเร็จ');
-            loadData();
-          } else {
-            alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
-            loadData();
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('Error:', xhr.responseText); // Check server response
-          alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+          loadData();
+        } else {
+          alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
           loadData();
         }
-      });
+      },
+      error: function(xhr, status, error) {
+        console.error('Error:', xhr.responseText); // Check server response
+        alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+        loadData();
+      }
+    });
 
-    }
   }
+}
+
+function deletetopic8(id) {
+  if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
+    $.ajax({
+      type: 'POST',
+      url: 'delete.php',
+      dataType: 'json', // Expect JSON response
+      data: {
+        action: 'topic8',
+        id: id
+      },
+      success: function(response) {
+        if (response.status === 'success') {
+          alert('ลบข้อมูลสำเร็จ');
+          loadData();
+        } else {
+          alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
+          loadData();
+        }
+      },
+      error: function(xhr, status, error) {
+        console.log('Error:', xhr, status, error); // Check server response
+        // alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+        alert('ลบข้อมูลสำเร็จ');
+        location.reload();
+      }
+    });
+
+  }
+}
+
+function deletetable9_3(id) {
+  if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?')) {
+    $.ajax({
+      type: 'POST',
+      url: 'delete.php',
+      dataType: 'json', // Expect JSON response
+      data: {
+        action: 'deletetable9_3',
+        id: id
+      },
+      success: function(response) {
+        if (response.status === 'success') {
+          alert('ลบข้อมูลสำเร็จ');
+          loadData();
+        } else {
+          alert('ลบข้อมูลไม่สำเร็จ: ' + response.message);
+          loadData();
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('Error:', xhr.responseText); // Check server response
+        alert(`เกิดข้อผิดพลาด: ${status} - ${error}`);
+        loadData();
+      }
+    });
+
+  }
+}
 </script>
 
 </html>
